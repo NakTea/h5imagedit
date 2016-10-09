@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<title>H5 image editor Demo</title>
+		<link type="text/css" rel="stylesheet" href="css/demo.css" />
+		<script src='js/jquery.js'></script>
+		<script src="js/img.edit.js"></script>
+		<script src='js/ImageEditor.js'></script>
+		<script src='js/jpeg_encoder_basic.js'></script>
+		<script src="js/Imageupload.js"></script>
+		<script>
+			var editor = null;
+			$(document).ready(function() {
+				editor = $('#editor').ImageEditor({
+					imageUrls: [
+						//'images/background-1.png'
+					],
+					removeIcon: 'images/delete.png',
+					width: 300,
+					height: 300,
+					onInitCompleted: function() {
+						editor.selectImage(0); // 初始化完成后，默认选中第一个图片（头像图片）作为当前编辑图片
+					}
+				});
+				$(".a-upload").on("change","input[type='file']",function(){
+					selectFileImage(this);
+				})
+			});		
+		</script>
+	</head>
+
+	<body>
+		<div class='center'>
+			<h1 id="title">ImageEditor Demo</h1>
+			<div id='editor'></div>
+			<div class='tool-control'>
+				<label class='flex-1'>ROTATE</label>
+				<input class='flex-2' 
+					type='range' 
+					min='-180' 
+					max='180' 
+					id='rotateControl' 
+					oninput='editor.rotateImage(this.value);' />
+			</div>
+			<div class='tool-control'>
+				<label class='flex-1'>SCALE</label>
+				<input class='flex-2' 
+					type='range'
+					id='scaleControl'
+					min='1'
+					max='2.0'
+					step='0.05'
+					oninput='editor.scaleImage(this.value, this.value);' />
+			</div>
+						<!--<div class='tool-control'>
+				<button class='pri-btn' onclick='clearImage()'>删除</button>
+			</div>
+			<input type="file" onchange="readFile(this)"/>
+			<input type="file" onchange="selectFileImage(this)"/>-->
+			<br/>
+			<a href="javascript:;" class="a-upload">
+				<input type="file" name="" id="">点击这里上传文件
+			</a>
+			
+			
+			<br/>
+			<div class='tool-control'>
+				<button class='pri-btn' onclick='confirmImage()'>Confirm</button>
+			</div>
+
+			<div id='outputs'>
+			</div>
+		</div>
+	</body>
+</html>
